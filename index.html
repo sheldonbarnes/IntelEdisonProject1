@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Hummingbird">
+<head>
+    <meta charset="UTF-8">
+    <title>Hummingbird Temperature</title>
+
+    <Script src="node_modules/angular/angular.js"></Script>
+    <Script SRc="hummingbird.js"></Script>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="node_modules/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" />
+
+</head>
+<body ng-controller="HummingbirdController">
+
+
+<table border="1">
+    <div class="jumbotron">
+        <div class="container">
+             <ul class="list-group" ng-repeat="temp in weatherData">
+
+            <li class="list-group-item" >{{temp.temperature.toFixed(2)}}</li>
+            <li class="list-group-item" >{{temp.humidity.toFixed(2)}}</li>
+            <li class="list-group-item" >{{temp.date}}</li>
+        </ul>
+        </div>
+    </div>
+
+</table>
+
+</body>
+</html>
