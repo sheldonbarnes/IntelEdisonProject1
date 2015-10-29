@@ -9,7 +9,7 @@ var sleep = require("sleep");
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('assert');
-var url = 'mongodb://192.168.2.111:27017/hummingbird';
+var url = 'mongodb://127.0.0.1:27017/hummingbird';
 
 
 var insertDocument = function(db, wd1, callback) {
@@ -49,21 +49,13 @@ var humidity = new five.Hygrometer({
         current_humidity = this.relativeHumidity;
         console.log("Humidity is " + this.relativeHumidity);
 
-        //sleep.sleep(15);
-
-
     });
 
     temperature.on("data", function() {
 
-
         current_temperature = this.fahrenheit;
 
-
-    sleep.sleep(15);
-
-      console.log("The temperature is " + current_temperature);
-
+        console.log("The temperature is " + current_temperature);
 
         if (current_humidity != 0 && current_temperature!=0) {
 
@@ -82,7 +74,7 @@ var humidity = new five.Hygrometer({
             });
         }
 
-
+        sleep.sleep(15);
     });
 
 });
