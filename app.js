@@ -17,19 +17,17 @@ var current_humidity = 2.2222222;
 
 app.listen(port);
 
-var weatherobject = {temperature:0, humidity:0, weatherdate: new Date()}
-
 var weatherdata = [];
 
 
 
 var findWeatherData = function(res,db, callback) {
 
-    var query =  {"temperature": {$gt: 71.50}};
+    //var query =  {"temperature": {$gt: 71.50}};
     var cursor =db.collection('weatherdata').find().sort({"date":-1}).limit(20);
 
     var arrayData = [];
-    var bigDoc = "Hello ";
+    //var bigDoc = "Hello ";
     cursor.each(function(err, doc) {
         assert.equal(err, null);
         if (doc != null) {
@@ -51,19 +49,21 @@ var findWeatherData = function(res,db, callback) {
 
 var findRecentTemp = function(res,db, callback) {
 
-    var query =  {"temperature": {$gt: 71.50}};
-    var cursor =db.collection('weatherdata').find().sort({"date":-1}).limit(20);
+    var cursor =db.collection('weatherdata').find({}, {"temperature":1,_id:0}).sort({"date":-1}).limit(20);
 
     var arrayData = [];
-    var bigDoc = "Hello ";
+    var goodArray = [];
+
     cursor.each(function(err, doc) {
         assert.equal(err, null);
         if (doc != null) {
-            //console.log(doc);
+            console.log(doc);
+            console.log(doc.temperature);
+            goodArray.push(doc.temperature);
             //res.write(JSON.stringify(doc));
             arrayData.push(doc);
         } else {
-            res.write(JSON.stringify(arrayData));
+            res.write(JSON.stringify(goodArray));
             res.end();
             callback();
         }
@@ -101,7 +101,7 @@ app.get('/api/getrecenttemp', function (req, res) {
 
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
-        findWeatherData(res,db, function() {
+        findRecentTemp(res,db, function() {
             db.close();
         });
 
